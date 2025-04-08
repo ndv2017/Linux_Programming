@@ -1,0 +1,1 @@
+**BT4**. Tạo file bất kì và ghi một đoạn dữ liệu vào file đó. Thực hiện ghi ra màn hình các thông tin: Loại file, tên file, thời gian chỉnh sửa file lần cuối, kích thước. (Sử dụng `struct stat`)

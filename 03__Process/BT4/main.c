@@ -24,7 +24,7 @@ int main(void) {
 			sleep(2);
 			exit(EXIT_VALUE); // Exit with predefined value
 
-        default:	/* Parent process */
+		default:	/* Parent process */
 			printf("Parent process: my pid: %d\n", getpid());
 
 			if (waitpid(pid, &status, 0) == -1) {

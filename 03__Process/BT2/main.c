@@ -10,9 +10,9 @@ int main(void) {
 	int index_value;
 	char *command_1 = "ls";
 	char *command_2 = "date";
-    char *argument_list_1[] = {"ls", "-lah", (char*) NULL};
-    char *argument_list_2[] = {"date", "-R", (char*) NULL};
-	
+	char *argument_list_1[] = {"ls", "-lah", (char*) NULL};
+	char *argument_list_2[] = {"date", "-R", (char*) NULL};
+
 	env_val = getenv("TASK_INDEX");
 	if (env_val == NULL) {
 		fprintf(stderr, "Environment variable TASK_INDEX not set.\n");
@@ -28,11 +28,11 @@ int main(void) {
 	pid = fork();
 	switch (pid) {
 		case -1:
-            perror("fork() failed.");
+			perror("fork() failed.");
 			exit(EXIT_FAILURE);
 
-        case 0:
-            // Child process
+		case 0:
+			// Child process
 			if (index_value == 1) {
 				execvp(command_1, argument_list_1);
 			} else if (index_value == 2) {
@@ -43,8 +43,8 @@ int main(void) {
 			perror("execvp() failed.");
 			exit(EXIT_FAILURE);
 
-        default:
-            // Parent process
+		default:
+			// Parent process
 			sleep(3); // Give child a chance to execute
 			printf("Parent process: my pid: %d\n", getpid());
 			printf("Parent process: my child process's pid: %d\n", pid);

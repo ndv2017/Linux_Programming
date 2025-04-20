@@ -15,10 +15,10 @@ int main(void) {
 
 	switch (pid) {
 		case -1:
-            perror("fork() failed.");
+			perror("fork() failed.");
 			exit(EXIT_FAILURE);
 
-        case 0:		/* Child process */
+		case 0:		/* Child process */
 			printf("Child process: my pid: %d\n", getpid());
 
 			sleep(2);
@@ -40,5 +40,5 @@ int main(void) {
 			}
 	}
 
-    return 0;
+	return 0;
 }

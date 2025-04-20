@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 
 void SIGUSR1_handler(int signalNum) {
-    printf("Caught SIGUSR1 signal. Signal number is: %d\n", signalNum);
+	printf("Caught SIGUSR1 signal. Signal number is: %d\n", signalNum);
 }
 
 int main(void) {
@@ -16,10 +16,10 @@ int main(void) {
 
 	switch (pid) {
 		case -1:
-            perror("fork() failed.");
+			perror("fork() failed.");
 			exit(EXIT_FAILURE);
 
-        case 0:		/* Child process */
+		case 0:		/* Child process */
 			printf("Child process: my pid: %d\n", getpid());
 
 			signal(SIGUSR1, SIGUSR1_handler);
@@ -30,7 +30,7 @@ int main(void) {
 			printf("Child process exiting after receiving signal.\n");
 			exit(EXIT_SUCCESS);
 
-        default:	/* Parent process */
+		default:	/* Parent process */
 			sleep(1); // Give child a chance to execute
 			printf("Parent process: my pid: %d\n", getpid());
 			printf("Parent process will send SIGUSR1 signal to child process after 3 seconds.\n");

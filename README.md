@@ -16,6 +16,9 @@ Process creation, management, and handling using system calls like `fork()`.
 ### [04__Thread](04__Thread/)
 Multi-threading assignments demonstrating thread creation, synchronization, and shared resource handling using Mutexes, Condition Variables, and Read-Write Locks.
 
+### [05__IPC_Socket](05__IPC_Socket/)
+Inter-Process Communication (IPC) using sockets. This includes both IPv4 and Unix domain sockets for stream and datagram communication.
+
 ## References
 - The Linux Programming Interface - Michael Kerrisk
 - [Linux man pages online](https://man7.org/linux/man-pages/)

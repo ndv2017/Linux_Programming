@@ -1,14 +1,14 @@
-**BT3**. Viết một chương trình có số lượng *command-line arguments* là *3*, có dạng như sau:
+**BT3**. Write a program with *3* *command-line arguments*, formatted as follows:
 
 ```bash
 $ ./example_program filename num-bytes [r/w] "Hello"
 ```
 
-Trong đó:
-1. `example_grogram`: Tên file thực thi
-2. `filename`: Tên file
-3. `num-bytes`: Số byte muốn read/write
+Where:
+1. `example_program`: Name of the executable file
+2. `filename`: Name of the file
+3. `num-bytes`: Number of bytes to read/write
 4. `[r/w]`:
-    - `r` -> Thực hiện đọc từ filename và in ra màn hình
-    - `w` -> Thực hiện ghi vào filename
-5. `"Hello"`: Nội dung bất kì muốn read/write vào filename
+    - `r` -> Perform reading from filename and display on screen
+    - `w` -> Perform writing to filename
+5. `"Hello"`: Any content you want to read/write to filename

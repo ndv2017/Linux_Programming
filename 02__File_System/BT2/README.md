@@ -1,4 +1,4 @@
-**BT2**. Sau mỗi lệnh *write* dưới đây, cho biết nội dung sẽ được ghi vào file nào, nội dung là gì và giải thích tại sao?
+**BT2**. After each *write* command below, indicate which file the content will be written to, what the content is, and explain why?
 
 ```c
 fd1 = open(file, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);

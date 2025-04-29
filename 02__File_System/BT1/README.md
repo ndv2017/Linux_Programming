@@ -1,7 +1,7 @@
-**BT1**. Viết một chương trình mở một file bất kì và sử dụng cờ `O_APPEND`, sau đó thực hiện *seek* về đầu file rồi ghi một vài dữ liệu vào file đó. Dữ liệu sẽ xuất hiện ở vị trí nào của file và tại sao lại như vậy?
+**BT1**. Write a program that opens any file using the `O_APPEND` flag, then performs a *seek* to the beginning of the file and writes some data to that file. Where will the data appear in the file and why?
 
-**Trả lời:**
+*Answer*:
 
-Dữ liệu sẽ được ghi ở **cuối file**, **không phải ở đầu file**, mặc dù đã gọi `lseek()` để di chuyển con trỏ về đầu.
+The data will be written at the **end of the file**, **not at the beginning**, despite calling `lseek()` to move the pointer to the beginning.
 
-Lý do là vì file được mở với cờ `O_APPEND`. Khi sử dụng `O_APPEND`, mỗi lần ghi (`write()`) sẽ **tự động ghi vào cuối file**, bất kể con trỏ file đang ở đâu. Vì vậy, lệnh `lseek()` không ảnh hưởng đến vị trí ghi trong trường hợp này.
+The reason is because the file was opened with the `O_APPEND` flag. When using `O_APPEND`, each write operation (`write()`) will **automatically write to the end of the file**, regardless of where the file pointer is positioned. Therefore, the `lseek()` command has no effect on the write position in this case.

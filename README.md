@@ -19,6 +19,9 @@ Multi-threading assignments demonstrating thread creation, synchronization, and 
 ### [05__IPC_Socket](05__IPC_Socket/)
 Inter-Process Communication (IPC) using sockets. This includes both IPv4 and Unix domain sockets for stream and datagram communication.
 
+### [06__IPC_Signal](06__IPC_Signal/)
+Inter-Process Communication (IPC) using signals. This includes signal handling, ignoring signals, and using signals for inter-process communication.
+
 ## References
 - The Linux Programming Interface - Michael Kerrisk
 - [Linux man pages online](https://man7.org/linux/man-pages/)

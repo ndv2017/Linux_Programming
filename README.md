@@ -22,6 +22,9 @@ Inter-Process Communication (IPC) using sockets. This includes both IPv4 and Uni
 ### [06__IPC_Signal](06__IPC_Signal/)
 Inter-Process Communication (IPC) using signals. This includes signal handling, ignoring signals, and using signals for inter-process communication.
 
+### [07__IPC_Pipe](07__IPC_Pipe/)
+Inter-Process Communication (IPC) using pipes. This includes unnamed pipes for parent-child communication and named pipes (FIFOs) for communication between unrelated processes.
+
 ## References
 - The Linux Programming Interface - Michael Kerrisk
 - [Linux man pages online](https://man7.org/linux/man-pages/)

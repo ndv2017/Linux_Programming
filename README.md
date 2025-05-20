@@ -25,6 +25,9 @@ Inter-Process Communication (IPC) using signals. This includes signal handling, 
 ### [07__IPC_Pipe](07__IPC_Pipe/)
 Inter-Process Communication (IPC) using pipes. This includes unnamed pipes for parent-child communication and named pipes (FIFOs) for communication between unrelated processes.
 
+### [08__Chat_Application](08__Chat_Application/)
+A command-line peer-to-peer chat application built using TCP sockets and non-blocking I/O with `select()`. It supports multiple simultaneous connections, message exchange, and command-driven interaction. The application is modularized with a shared library and demonstrates advanced socket programming, signal handling, and dynamic linking.
+
 ## References
 - The Linux Programming Interface - Michael Kerrisk
 - [Linux man pages online](https://man7.org/linux/man-pages/)

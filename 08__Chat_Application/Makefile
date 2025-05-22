@@ -27,7 +27,7 @@ all: objs shared cp_lib
 	@echo "----------------------------------------"
 
 objs:
-	$(CC) $(CFLAGS) $(OBJ_DIR)/main.o $(SRC_DIR)/main.c $(INC_FLAGS)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/main.o $(CUR_DIR)/main.c $(INC_FLAGS)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/network.o $(SRC_DIR)/network.c $(INC_FLAGS)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/chat.o $(SRC_DIR)/chat.c $(INC_FLAGS)
 

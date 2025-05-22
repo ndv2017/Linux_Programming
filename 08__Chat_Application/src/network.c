@@ -96,6 +96,17 @@ void connect_to_peer(char *command) {
     }
     port = atoi(token);
 
+    /* Check if there's already a connection with the same port */
+    for (int i = 0; i < MAX_PEERS; i++) {
+        if (peers[i].active) {
+            int peer_port = peers[i].listening_port;
+            if ((strcmp(peers[i].ip, ip) == 0) && (port == peer_port)) {
+                printf("Connection already exists.\n");
+                return;
+            }
+        }
+    }
+
     int slot = get_available_peer_slot();
     if (slot == -1) {
         printf("Cannot connect: maximum number of peers reached.\n");
@@ -247,7 +258,7 @@ void accept_connections() {
         return;
     }
 
-    /* Add to pers array */
+    /* Add to peers array */
     peers[slot].socket_fd = client_fd;
     inet_ntop(AF_INET, &client_addr.sin_addr, peers[slot].ip, INET_ADDRSTRLEN);
     peers[slot].connection_port = ntohs(client_addr.sin_port);

@@ -16,9 +16,9 @@ project_directory/
 │   ├── network.h          # Network-related declarations and structures
 │   └── chat.h             # UI and utility function declarations
 ├── src/
-│   ├── main.c             # Main program and command-line interface
 │   ├── chat.c             # User interface utilities
 │   └── network.c          # Network communication logic
+├── main.c                 # Main program and command-line interface
 ├── Makefile               # Build script for compiling and running
 ├── obj/                   # Object files (generated during build)
 ├── bin/                   # Executable (chat_app, generated during build)
@@ -29,10 +29,10 @@ project_directory/
 ### File Descriptions
 - **inc/network.h**: Contains network-related structures, macros, and function prototypes for socket operations, peer management, and message handling.
 - **inc/chat.h**: Contains UI-related function prototypes and utility declarations for displaying help messages and local network information.
-- **src/main.c**: Implements the main program entry point and command-line interface for processing user commands.
+- **main.c**: Implements the main program entry point and command-line interface for processing user commands.
 - **src/chat.c**: Handles user interface tasks, such as displaying help messages and local network information.
 - **src/network.c**: Manages network operations, including socket setup, peer connections, and message handling.
-- **Makefile**: Automates building and running the application.
+- **Makefile**: Automates building, running (via `Make run PORT=...`), and memory checking, producing the executable and shared library.
 
 ## Features
 - **Peer-to-Peer Communication**: Connects to other instances using IP addresses and port numbers.

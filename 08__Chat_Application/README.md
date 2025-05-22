@@ -5,7 +5,7 @@ For a detailed description of the assignment requirements, see [Assignment Descr
 ## Overview
 The `chat_app` project is a C-based, command-line chat application that enables peer-to-peer communication over TCP sockets. It allows users to connect to other instances of the application, send messages, list active connections, and terminate connections. The application uses non-blocking sockets and the `select` system call for concurrent handling of multiple connections and user input. It supports commands like `help`, `myip`, `myport`, `connect`, `list`, `terminate`, `send`, and `exit`.
 
-The project is modular, split into multiple source files for maintainability, and includes a Makefile for building and running the application. It creates a shared library (`libchat_app.so`) for core functionality and an executable (`chat_app`) for the command-line interface.
+The project is modular, split into multiple source files for maintainability, and includes a Makefile for building and running the application.
 
 ## Project Structure
 The project is organized as follows:
@@ -13,7 +13,8 @@ The project is organized as follows:
 ```
 project_directory/
 ├── inc/
-│   └── chat.h             # Header file with declarations
+│   ├── network.h          # Network-related declarations and structures
+│   └── chat.h             # UI and utility function declarations
 ├── src/
 │   ├── main.c             # Main program and command-line interface
 │   ├── chat.c             # User interface utilities
@@ -26,11 +27,12 @@ project_directory/
 ```
 
 ### File Descriptions
-- **inc/chat.h**: Header file containing includes, macros, structure definitions, global variable declarations, and function prototypes.
+- **inc/network.h**: Contains network-related structures, macros, and function prototypes for socket operations, peer management, and message handling.
+- **inc/chat.h**: Contains UI-related function prototypes and utility declarations for displaying help messages and local network information.
 - **src/main.c**: Implements the main program entry point and command-line interface for processing user commands.
 - **src/chat.c**: Handles user interface tasks, such as displaying help messages and local network information.
 - **src/network.c**: Manages network operations, including socket setup, peer connections, and message handling.
-- **Makefile**: Automates building, running (via `Make run PORT=...`), and memory checking, producing the executable and shared library.
+- **Makefile**: Automates building and running the application.
 
 ## Features
 - **Peer-to-Peer Communication**: Connects to other instances using IP addresses and port numbers.

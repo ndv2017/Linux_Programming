@@ -21,6 +21,10 @@ CFLAGS		:= -c -fPIC -o
 
 all: objs shared cp_lib
 	$(CC) $(OBJ_DIR)/main.o -L$(LIB_SHARED) -l$(LIB_NAME) -o $(BIN_DIR)/chat_app
+	@echo "----------------------------------------"
+	@echo "Chat Application Build Successfully"
+	@echo "Run '$(BIN_DIR)/chat_app <port_no>' or 'make run PORT=<port_no>' to start the chat application"
+	@echo "----------------------------------------"
 
 objs:
 	$(CC) $(CFLAGS) $(OBJ_DIR)/main.o $(SRC_DIR)/main.c $(INC_FLAGS)
@@ -32,7 +36,6 @@ shared:
 
 cp_lib:
 	sudo cp -f $(LIB_SHARED)/lib$(LIB_NAME).so /usr/lib
-
 
 run: all
 	@echo "Running chat_app with PORT=$(PORT)..."

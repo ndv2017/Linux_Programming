@@ -21,18 +21,23 @@ void print_help() {
 char* get_local_IP_address() {
     char host_buffer[256];
     struct hostent *host_entry;
+
     if (gethostname(host_buffer, sizeof(host_buffer)) == -1)
         return NULL;
+
     if ((host_entry = gethostbyname(host_buffer)) == NULL)
         return NULL;
+
     return inet_ntoa(*((struct in_addr*)host_entry->h_addr_list[0]));
 }
 
 void print_IP_address() {
     char *IP_buffer;
+
     IP_buffer = get_local_IP_address();
     if (IP_buffer == NULL)
         handle_error("get_local_IP_address");
+
     printf("IP address: %s\n", IP_buffer);
 }
 

@@ -13,18 +13,18 @@ int main(int argc, char *argv[]) {
     }
     else
         port_no = atoi(argv[1]);
-    
+
+    bool show_prompt_command = false;
+
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
-    
+
     init_peers();
     listen_fd = init_server(port_no);
-    
+
     print_help();
     printf("Listening on port %d...\n", port_no);
 
-    int show_prompt_command = false;
-    
     while (!exit_flag) {
         accept_connections();
         check_incoming_messages();
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
                 continue;
 
             command[strcspn(command, "\n")] = 0;
-            
+
             if (strlen(command) <= 0)                                           printf("Type command...\n");
             else if (strcmp(command, "help") == 0)                              print_help();
             else if (strcmp(command, "myip") == 0)                              print_IP_address();
@@ -68,8 +68,8 @@ int main(int argc, char *argv[]) {
             show_prompt_command = false;
         }
     }
-    
+
     exit_app();
-    
+
     return 0;
 }

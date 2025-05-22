@@ -44,4 +44,4 @@ void terminate_connection(char *command);
 void send_message(char *command);
 void exit_app(void);
 
-#endif /* NETWORK_H */ 
+#endif /* NETWORK_H */

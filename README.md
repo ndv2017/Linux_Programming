@@ -28,6 +28,11 @@ Inter-Process Communication (IPC) using pipes. This includes unnamed pipes for p
 ### [08__Chat_Application](08__Chat_Application/)
 A command-line peer-to-peer chat application built using TCP sockets and non-blocking I/O with `select()`. It supports multiple simultaneous connections, message exchange, and command-driven interaction. The application is modularized with a shared library and demonstrates advanced socket programming, signal handling, and dynamic linking.
 
+---
+
+### [Yocto_Project](Yocto_Project/)
+A project to build a custom Linux distribution using the Yocto Project for the BeagleBone Black.
+
 ## References
 - The Linux Programming Interface - Michael Kerrisk
 - [Linux man pages online](https://man7.org/linux/man-pages/)

@@ -1,9 +1,9 @@
-#include <linux/module.h>   /* macro like module_init/module_exit */
-#include <linux/fs.h>       /* function that allocates major/minor number */
-#include <linux/device.h>   /* function: class_create/device_create */
-#include <linux/cdev.h>     /* kmalloc */
-#include <linux/slab.h>     /* cdev_init/cdev_add */
-#include <linux/uaccess.h>  /* copy_to_user/copy_from_user */
+#include <linux/module.h>   // macro like module_init/module_exit
+#include <linux/fs.h>       // function that allocates major/minor number
+#include <linux/device.h>   // function: class_create/device_create
+#include <linux/cdev.h>     // kmalloc
+#include <linux/slab.h>     // cdev_init/cdev_add
+#include <linux/uaccess.h>  // copy_to_user/copy_from_user
 
 #define DRIVER_AUTHOR   "Vion vion@gmail.com"
 #define DRIVER_DESC     "First kernel module"
@@ -58,7 +58,7 @@ static ssize_t m_read(struct file *filp, char __user *user_buf, size_t size, lof
     }
 
     *offset += to_read;
-    printk(KERN_INFO "Data Read : Done!\n");
+    printk(KERN_INFO "Data Read: Done!\n");
     
     return to_read;
 }
@@ -76,7 +76,7 @@ static ssize_t m_write(struct file *filp, const char __user *user_buf, size_t si
 
     kbuf[len] = '\0';
 
-    /* Remove potential newline */
+    // Remove potential newline
     if (kbuf[len - 1] == '\n')
         kbuf[len - 1] = '\0';
 
@@ -96,28 +96,26 @@ static ssize_t m_write(struct file *filp, const char __user *user_buf, size_t si
 }
 
 static int  __init first_driver_init(void) {
-    if (alloc_chrdev_region(&mdev.dev_num, 0, 1, "m_cdev") < 0) { // (cat /pro/devices)
+    if (alloc_chrdev_region(&mdev.dev_num, 0, 1, "m_cdev") < 0) {
         printk(KERN_INFO "Major number allocation is failed\n");
         return -1;
     }
 
     pr_info("Major = %d & Minor = %d", MAJOR(mdev.dev_num), MINOR(mdev.dev_num));
 
-    /* initialize a cdev structure */
     cdev_init(&mdev.m_cdev, &fops);
 
-    /* add a char device to the system */
     if ((cdev_add(&mdev.m_cdev, mdev.dev_num, 1)) < 0) {
         pr_err("Cannot add the device to the system\n");
         goto rm_device_num;
     }
 
-    if ((mdev.m_class = class_create(THIS_MODULE, "m_class")) == NULL) {   // (/sys/class)
+    if ((mdev.m_class = class_create(THIS_MODULE, "m_class")) == NULL) {
         printk(KERN_INFO "Creating class failed\n");
         goto rm_device_num;
     }
 
-    if ((device_create(mdev.m_class, NULL, mdev.dev_num, NULL, "m_device")) == NULL) {    // (/dev), remember chmod
+    if ((device_create(mdev.m_class, NULL, mdev.dev_num, NULL, "m_device")) == NULL) {
         printk(KERN_INFO "Creating device failed\n");
         goto rm_class;
     }

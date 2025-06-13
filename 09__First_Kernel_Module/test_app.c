@@ -3,6 +3,7 @@
 #include <string.h>
 
 #define CDEV_PATH "/dev/m_device"
+#define MAX_BUF 1024
 
 void printMenu(void) {
     printf("Choose option for file:\n");
@@ -15,7 +16,7 @@ void printMenu(void) {
 
 int main(void) {
     int option;
-    char write_buf[1024], read_buf[1024];
+    char write_buf[MAX_BUF], read_buf[MAX_BUF];
     
     while (1) {
         printMenu();
@@ -34,11 +35,10 @@ int main(void) {
                     exit(EXIT_FAILURE);
                 }
 
-                /* Write to the file */
                 fwrite(write_buf, sizeof(char), strlen(write_buf), file);
+                printf("Data Writing ... Done!\n\n\n");
 
                 fclose(file);
-                printf("Data Writing ... Done!\n\n\n");
                 break;
             }
 
@@ -55,8 +55,9 @@ int main(void) {
                     printf("%s", read_buf);                        // Print each line read from the file
                 }
 
-                fclose(file);
                 printf("\nDone!\n\n\n");
+
+                fclose(file);
                 break;
             }
 
@@ -66,7 +67,7 @@ int main(void) {
                 break;
 
             default:
-                printf("Enter Valid option\n");
+                printf("Enter valid option\n");
                 break;
         }
     }

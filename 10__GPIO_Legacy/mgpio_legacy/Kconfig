@@ -1,0 +1,9 @@
+menu "mgpio legacy device driver"
+
+config MGPIO_LEGACY
+    bool "mgpio legacy device driver"
+    depends on ARM
+    default y if ARM
+    help
+        Select this option to run mgpio legacy module.
+endmenu

@@ -14,7 +14,7 @@
 
 #define GPIO_NUMBER_27          27
 
-#define BCM2837_GPIO_BASE_ADDR  0x20200000
+#define BCM2837_GPIO_BASE_ADDR  0x3F200000
 #define GPIO_FSEL_OFFSET        0x00
 #define GPIO_SET_0_OFFSET       0x1C
 #define GPIO_CLR_0_OFFSET       0x28
@@ -31,8 +31,8 @@ struct my_foo_dev {
     struct cdev m_cdev;
 } mdev;
 
-static int      __init first_driver_init(void);
-static void     __exit first_driver_exit(void);
+static int      __init gpio_legacy_driver_init(void);
+static void     __exit gpio_legacy_exit(void);
 static int      m_open(struct inode *inode, struct file *file);
 static int      m_release(struct inode *inode, struct file *file);
 static ssize_t  m_read(struct file *filp, char __user *user_buf, size_t size, loff_t * offset);
@@ -79,7 +79,6 @@ static ssize_t m_read(struct file *filp, char __user *user_buf, size_t size, lof
 static ssize_t m_write(struct file *filp, const char __user *user_buf, size_t size, loff_t *offset) {
     char kbuf[MAX_BUFF_USER] = {0};
     size_t len = (size < MAX_BUFF_USER - 1) ? size : (MAX_BUFF_USER - 1);
-    uint32_t reg;
 
     pr_info("System call write() called...!!!\n");
 
@@ -98,19 +97,6 @@ static ssize_t m_write(struct file *filp, const char __user *user_buf, size_t si
     if (strcmp(kbuf, "on") == 0) {
         pr_info("Turn my led on\n");
 
-        // Map GPIO registers into kernel virtual address space
-        gpio_base = ioremap(BCM2837_GPIO_BASE_ADDR, 0x28);
-        if (!gpio_base) {
-            pr_err("Failed to ioremap GPIO\n");
-            return -ENOMEM;
-        }
-
-        // Configure GPIO27 as output
-        reg = ioread32(gpio_base + GPIO_FSEL_OFFSET + ((GPIO_NUMBER_27 / 10) * 4));
-        reg &= ~(7 << ((GPIO_NUMBER_27 % 10) * 3)); // Clear current function
-        reg |= (1 << ((GPIO_NUMBER_27 % 10) * 3));  // Set as output
-        iowrite32(reg, gpio_base + GPIO_FSEL_OFFSET + ((GPIO_NUMBER_27 / 10) * 4));
-
         // Set GPIO27 HIGH
         iowrite32(1 << GPIO_NUMBER_27, gpio_base + GPIO_SET_0_OFFSET);
         pr_info("GPIO27 set to HIGH\n");
@@ -118,13 +104,9 @@ static ssize_t m_write(struct file *filp, const char __user *user_buf, size_t si
     else if (strcmp(kbuf, "off") == 0) {
         pr_info("Turn my led off\n");
 
-        // Set GPIO27 to LOW before exiting
+        // Set GPIO27 LOW
         iowrite32(1 << GPIO_NUMBER_27, gpio_base + GPIO_CLR_0_OFFSET);
         pr_info("GPIO27 set to LOW\n");
-
-        // Unmap GPIO memory region
-        if (gpio_base)
-            iounmap(gpio_base);
     }
     else {
         pr_warn("Unknown command: %s\n", kbuf);
@@ -133,7 +115,9 @@ static ssize_t m_write(struct file *filp, const char __user *user_buf, size_t si
     return size;
 }
 
-static int  __init first_driver_init(void) {
+static int  __init gpio_legacy_driver_init(void) {
+    uint32_t reg;
+
     if (alloc_chrdev_region(&mdev.dev_num, 0, 1, "m_cdev") < 0) {
         printk(KERN_INFO "Major number allocation is failed\n");
         return -1;
@@ -163,6 +147,19 @@ static int  __init first_driver_init(void) {
         goto rm_device;
     }
 
+    // Map GPIO registers into kernel virtual address space
+    gpio_base = ioremap(BCM2837_GPIO_BASE_ADDR, 0x28);
+    if (!gpio_base) {
+        pr_err("Failed to ioremap GPIO\n");
+        return -ENOMEM;
+    }
+
+    // Configure GPIO27 as output
+    reg = ioread32(gpio_base + GPIO_FSEL_OFFSET + ((GPIO_NUMBER_27 / 10) * 4));
+    reg &= ~(7 << ((GPIO_NUMBER_27 % 10) * 3)); // Clear current function
+    reg |= (1 << ((GPIO_NUMBER_27 % 10) * 3));  // Set as output
+    iowrite32(reg, gpio_base + GPIO_FSEL_OFFSET + ((GPIO_NUMBER_27 / 10) * 4));
+
     printk(KERN_INFO "GPIO Legacy module hello\n");
     return 0;
 
@@ -175,7 +172,15 @@ rm_device_num:
     return -1;
 }
 
-static void  __exit first_driver_exit(void) {
+static void  __exit gpio_legacy_exit(void) {
+    // Set GPIO27 to LOW before exiting
+    iowrite32(1 << GPIO_NUMBER_27, gpio_base + GPIO_CLR_0_OFFSET);
+    pr_info("GPIO27 set to LOW\n");
+
+    // Unmap GPIO memory region
+    if (gpio_base)
+        iounmap(gpio_base);
+
     kfree(mdev.p_kernel_buffer);
     device_destroy(mdev.m_class, mdev.dev_num);
     class_destroy(mdev.m_class);
@@ -184,8 +189,8 @@ static void  __exit first_driver_exit(void) {
     printk(KERN_INFO "Goodbye from GPIO Legacy module\n");
 }
 
-module_init(first_driver_init);
-module_exit(first_driver_exit);
+module_init(gpio_legacy_driver_init);
+module_exit(gpio_legacy_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR(DRIVER_AUTHOR);

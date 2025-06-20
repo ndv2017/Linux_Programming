@@ -38,6 +38,9 @@ A project to build a custom Linux distribution using the Yocto Project for the B
 ### [09__First_Kernel_Module](09__First_Kernel_Module/)
 Create a character device driver that allows reading and writing to a device file, logging messages to the kernel log based on user input.
 
+### [10__GPIO_Legacy](10__GPIO_Legacy/)
+Control a GPIO device using a character device driver.
+
 ## References
 - The Linux Programming Interface - Michael Kerrisk
 - [Linux man pages online](https://man7.org/linux/man-pages/)

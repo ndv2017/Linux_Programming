@@ -1,0 +1,10 @@
+menu "mgpio integer-based device driver"
+
+config MGPIO_INTEGER_BASED
+    tristate "mgpio integer-based device driver"
+    depends on ARM
+    default y if ARM
+    help
+        Select this option to run mgpio integer-based module.
+        If unsure, choose 'y' for built-in, 'm' for module, or 'n' for no support.
+endmenu

@@ -32,7 +32,7 @@ struct my_foo_dev {
 } mdev;
 
 static int      __init gpio_legacy_driver_init(void);
-static void     __exit gpio_legacy_exit(void);
+static void     __exit gpio_legacy_driver_exit(void);
 static int      m_open(struct inode *inode, struct file *file);
 static int      m_release(struct inode *inode, struct file *file);
 static ssize_t  m_read(struct file *filp, char __user *user_buf, size_t size, loff_t * offset);
@@ -172,7 +172,7 @@ rm_device_num:
     return -1;
 }
 
-static void  __exit gpio_legacy_exit(void) {
+static void  __exit gpio_legacy_driver_exit(void) {
     // Set GPIO27 to LOW before exiting
     iowrite32(1 << GPIO_NUMBER_27, gpio_base + GPIO_CLR_0_OFFSET);
     pr_info("GPIO27 set to LOW\n");
@@ -190,7 +190,7 @@ static void  __exit gpio_legacy_exit(void) {
 }
 
 module_init(gpio_legacy_driver_init);
-module_exit(gpio_legacy_exit);
+module_exit(gpio_legacy_driver_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR(DRIVER_AUTHOR);

@@ -1,0 +1,10 @@
+menu "mgpio descriptor-based device driver"
+
+config MGPIO_DESCRIPTOR_BASED
+    tristate "mgpio descriptor-based device driver"
+    depends on ARM
+    default y if ARM
+    help
+        Select this option to run mgpio descriptor-based module.
+        If unsure, choose 'y' for built-in, 'm' for module, or 'n' for no support.
+endmenu
